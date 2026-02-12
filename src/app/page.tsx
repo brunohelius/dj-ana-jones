@@ -276,8 +276,9 @@ export default async function HomePage() {
           <p className='section-kicker'>Instagram</p>
           <h2 className='section-title'>Integracao com feed @anajonesdj</h2>
           <p className='mt-3 max-w-2xl text-sm text-[var(--muted)]'>
-            Com `INSTAGRAM_ACCESS_TOKEN`, o site puxa posts reais automaticamente. Sem token,
-            exibe cards de fallback para manter o visual ativo.
+            Conteudo direto do Instagram oficial da Ana Jones, atualizado automaticamente.
+            Quando a integracao estiver indisponivel, o site exibe destaques selecionados para
+            manter o visual sempre ativo.
           </p>
           <div className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
             {instagramPosts.map((post) => (

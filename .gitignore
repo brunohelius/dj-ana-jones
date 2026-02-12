@@ -40,12 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# temporary blocked downloads
-public/gallery/real/ana-profile-djanemag.jpeg
-public/gallery/real/ana-sente-cover.jpg
-public/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-large.jpg
-public/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-large.png
-
 # OpenNext
 .open-next
 

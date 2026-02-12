@@ -123,7 +123,57 @@ export async function GET(request: NextRequest) {
   }
 
   const eventSlug = request.nextUrl.searchParams.get('eventSlug') || undefined;
+  const format = request.nextUrl.searchParams.get('format');
   const signups = await listEventSignups(eventSlug);
+
+  if (format === 'csv') {
+    const header = [
+      'createdAt',
+      'eventSlug',
+      'eventTitle',
+      'name',
+      'email',
+      'phone',
+      'city',
+      'guestCount',
+      'notes',
+    ];
+
+    const toCsvCell = (value: unknown) => {
+      const safeValue = value === undefined || value === null ? '' : String(value);
+
+      return `"${safeValue.replace(/"/g, '""')}"`;
+    };
+
+    const rows = signups.map((signup) => {
+      const event = getEventBySlug(signup.eventSlug);
+      return [
+        signup.createdAt,
+        signup.eventSlug,
+        event?.title || '',
+        signup.name,
+        signup.email || '',
+        signup.phone || '',
+        signup.city || '',
+        signup.guestCount,
+        signup.notes || '',
+      ]
+        .map(toCsvCell)
+        .join(',');
+    });
+
+    const eventLabel =
+      eventSlug && eventSlug.length > 0 ? eventSlug : 'todos-eventos';
+    const fileName = `${eventLabel}-inscricoes.csv`;
+    const csv = [header.join(','), ...rows].join('\n');
+
+    return new NextResponse(csv, {
+      headers: {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="${fileName}"`,
+      },
+    });
+  }
 
   return NextResponse.json({ data: signups });
 }

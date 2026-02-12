@@ -33,6 +33,7 @@ type LoadState = {
 
 export const AdminDashboard = () => {
   const [accessKey, setAccessKey] = useState('');
+  const [eventSlug, setEventSlug] = useState('');
   const [signups, setSignups] = useState<EventSignup[]>([]);
   const [bookings, setBookings] = useState<BookingRequest[]>([]);
   const [state, setState] = useState<LoadState>({ kind: 'idle' });
@@ -46,7 +47,7 @@ export const AdminDashboard = () => {
 
     try {
       const [signupsResponse, bookingsResponse] = await Promise.all([
-        fetch('/api/event-signups', {
+        fetch(`/api/event-signups${eventSlug ? `?eventSlug=${encodeURIComponent(eventSlug)}` : ''}`, {
           headers: { 'x-admin-key': accessKey },
           cache: 'no-store',
         }),
@@ -124,6 +125,31 @@ export const AdminDashboard = () => {
 
         <section className='glass-card overflow-x-auto p-5'>
           <h2 className='text-xl font-display uppercase tracking-[0.08em]'>Lista de Eventos</h2>
+          <div className='mt-4 flex flex-wrap gap-3'>
+            <input
+              className='field w-full md:max-w-xs'
+              value={eventSlug}
+              onChange={(event) => setEventSlug(event.target.value)}
+              placeholder='Filtrar por slug do evento (ex: aniversario-ana-jones-2026)'
+            />
+            <button
+              type='button'
+              className='btn-secondary'
+              disabled={state.kind !== 'loaded'}
+              onClick={() => {
+                if (state.kind !== 'loaded' || !accessKey) {
+                  return;
+                }
+
+                const url = `/api/event-signups?adminKey=${encodeURIComponent(
+                  accessKey,
+                )}&format=csv${eventSlug ? `&eventSlug=${encodeURIComponent(eventSlug)}` : ''}`;
+                window.location.assign(url);
+              }}
+            >
+              Exportar CSV
+            </button>
+          </div>
           <table className='mt-4 min-w-full text-left text-sm'>
             <thead className='text-xs uppercase tracking-[0.08em] text-[var(--muted)]'>
               <tr>

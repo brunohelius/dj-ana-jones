@@ -1,5 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import path from 'node:path';
+import { readCollection, writeCollection } from '@/lib/dataStore';
 
 export type EventSignupInput = {
   eventSlug: string;
@@ -16,35 +15,14 @@ export type EventSignup = EventSignupInput & {
   createdAt: string;
 };
 
-const dataDirectory = path.join(process.cwd(), 'data');
-const signupsFile = path.join(dataDirectory, 'event-signups.json');
-
-const ensureSignupsFile = async () => {
-  await mkdir(dataDirectory, { recursive: true });
-
-  try {
-    await readFile(signupsFile, 'utf8');
-  } catch {
-    await writeFile(signupsFile, '[]', 'utf8');
-  }
-};
+const signupsFile = 'event-signups.json';
 
 const readSignups = async (): Promise<EventSignup[]> => {
-  await ensureSignupsFile();
-
-  try {
-    const content = await readFile(signupsFile, 'utf8');
-    const parsed = JSON.parse(content);
-
-    return Array.isArray(parsed) ? (parsed as EventSignup[]) : [];
-  } catch {
-    return [];
-  }
+  return readCollection<EventSignup>(signupsFile);
 };
 
 const writeSignups = async (signups: EventSignup[]) => {
-  await ensureSignupsFile();
-  await writeFile(signupsFile, JSON.stringify(signups, null, 2), 'utf8');
+  await writeCollection<EventSignup>(signupsFile, signups);
 };
 
 export const listEventSignups = async (eventSlug?: string) => {

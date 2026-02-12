@@ -23,7 +23,7 @@ const mediaEmbeds = [
     description: 'Sets completos e mixtapes da Ana Jones.',
     iframe:
       process.env.NEXT_PUBLIC_SOUNDCLOUD_EMBED_URL ||
-      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/196140237&color=%23ff6b35&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false',
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1969383299&color=%23ff6b35&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false',
   },
   {
     title: 'Spotify',
@@ -37,7 +37,7 @@ const mediaEmbeds = [
     description: 'Shows, lives e registros visuais da pista.',
     iframe:
       process.env.NEXT_PUBLIC_YOUTUBE_EMBED_URL ||
-      'https://www.youtube.com/embed/7wtfhZwyrcc?si=BiCGW9oevqTI8Y9l',
+      'https://www.youtube.com/embed/FlspfN8iHJ0',
   },
 ];
 

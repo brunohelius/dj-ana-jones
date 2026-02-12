@@ -27,17 +27,29 @@ npm install
 npm run dev
 ```
 
+## Producao
+- Dominio principal: `https://anajonesdj.com`
+- Dominio alternativo: `https://www.anajonesdj.com` (redireciona para principal)
+- Hosting: Netlify
+
+### Deploy
+```bash
+set -a; source .env; set +a
+npx netlify deploy --prod --build
+```
+
 ## Variaveis de ambiente
 Use `.env.local` para ambiente local e `.env.example` como referencia.
 
 Campos principais:
 - `ADMIN_DASHBOARD_KEY`
-- `EVENT_SIGNUP_NOTIFY_EMAIL`
-- `BOOKING_NOTIFY_EMAIL`
-- `AWS_REGION`
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `SES_FROM_EMAIL`
+- `DJ_AWS_REGION`
+- `DJ_AWS_ACCESS_KEY_ID`
+- `DJ_AWS_SECRET_ACCESS_KEY`
+- `DJ_AWS_S3_BUCKET`
+- `EVENT_SIGNUP_NOTIFY_EMAIL` (opcional)
+- `BOOKING_NOTIFY_EMAIL` (opcional)
+- `SES_FROM_EMAIL` ou `DJ_SES_FROM_EMAIL` (opcional)
 - `INSTAGRAM_ACCESS_TOKEN` (opcional)
 
 ## Dados locais (MVP)

@@ -13,9 +13,11 @@ type EmailResult = {
 };
 
 const getSesClient = () => {
-  const region = process.env.AWS_REGION;
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+  const region = process.env.DJ_AWS_REGION || process.env.AWS_REGION;
+  const accessKeyId =
+    process.env.DJ_AWS_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey =
+    process.env.DJ_AWS_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY;
 
   if (!region || !accessKeyId || !secretAccessKey) {
     return null;
@@ -31,7 +33,7 @@ const getSesClient = () => {
 };
 
 const sendEmail = async (payload: EmailPayload): Promise<EmailResult> => {
-  const fromAddress = process.env.SES_FROM_EMAIL;
+  const fromAddress = process.env.DJ_SES_FROM_EMAIL || process.env.SES_FROM_EMAIL;
   const client = getSesClient();
 
   if (!fromAddress) {

@@ -1,5 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import path from 'node:path';
+import { readCollection, writeCollection } from '@/lib/dataStore';
 
 export type BookingRequestInput = {
   name: string;
@@ -16,35 +15,14 @@ export type BookingRequest = BookingRequestInput & {
   createdAt: string;
 };
 
-const dataDirectory = path.join(process.cwd(), 'data');
-const bookingsFile = path.join(dataDirectory, 'booking-requests.json');
-
-const ensureBookingsFile = async () => {
-  await mkdir(dataDirectory, { recursive: true });
-
-  try {
-    await readFile(bookingsFile, 'utf8');
-  } catch {
-    await writeFile(bookingsFile, '[]', 'utf8');
-  }
-};
+const bookingsFile = 'booking-requests.json';
 
 const readBookings = async (): Promise<BookingRequest[]> => {
-  await ensureBookingsFile();
-
-  try {
-    const content = await readFile(bookingsFile, 'utf8');
-    const parsed = JSON.parse(content);
-
-    return Array.isArray(parsed) ? (parsed as BookingRequest[]) : [];
-  } catch {
-    return [];
-  }
+  return readCollection<BookingRequest>(bookingsFile);
 };
 
 const writeBookings = async (requests: BookingRequest[]) => {
-  await ensureBookingsFile();
-  await writeFile(bookingsFile, JSON.stringify(requests, null, 2), 'utf8');
+  await writeCollection<BookingRequest>(bookingsFile, requests);
 };
 
 export const listBookingRequests = async () => {

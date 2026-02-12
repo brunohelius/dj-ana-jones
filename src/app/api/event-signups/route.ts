@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
       notes: notes || undefined,
     });
 
-    const emailResult = await sendEventSignupNotification({
+    await sendEventSignupNotification({
       eventTitle: event.title,
       name: signup.name,
       email: signup.email,
@@ -93,7 +93,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: 'Inscricao realizada com sucesso.',
       data: signup,
-      notification: emailResult,
     });
   } catch {
     return NextResponse.json(

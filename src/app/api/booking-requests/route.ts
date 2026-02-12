@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       message: message || undefined,
     });
 
-    const emailResult = await sendBookingNotification({
+    await sendBookingNotification({
       name: booking.name,
       email: booking.email,
       phone: booking.phone,
@@ -73,7 +73,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: 'Pedido de contratacao enviado com sucesso.',
       data: booking,
-      notification: emailResult,
     });
   } catch {
     return NextResponse.json(

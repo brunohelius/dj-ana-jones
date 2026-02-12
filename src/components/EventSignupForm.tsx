@@ -46,10 +46,6 @@ export const EventSignupForm = ({
 
       const body = (await response.json()) as {
         message?: string;
-        notification?: {
-          sent?: boolean;
-          reason?: string;
-        };
       };
 
       if (!response.ok) {
@@ -62,12 +58,9 @@ export const EventSignupForm = ({
 
       setStatus({
         kind: 'success',
-        message: buildSuccessMessage({
-          defaultMessage:
-            body.message ||
-            `Inscricao confirmada para ${eventTitle}. Te esperamos na pista.`,
-          notification: body.notification,
-        }),
+        message:
+          body.message ||
+          `Inscricao confirmada para ${eventTitle}. Te esperamos na pista.`,
       });
     } catch {
       setStatus({
@@ -136,27 +129,4 @@ export const EventSignupForm = ({
       </form>
     </div>
   );
-};
-
-const buildSuccessMessage = ({
-  defaultMessage,
-  notification,
-}: {
-  defaultMessage: string;
-  notification?: {
-    sent?: boolean;
-    reason?: string;
-  };
-}) => {
-  if (!notification) {
-    return `${defaultMessage} Registro gravado na lista de contatos do evento.`;
-  }
-
-  if (notification.sent) {
-    return `${defaultMessage} Notificacao enviada para a equipe da Ana Jones.`;
-  }
-
-  return `${defaultMessage} Registro gravado na lista de contatos. Notificacao por e-mail pendente: ${
-    notification.reason || 'destinatario nao configurado.'
-  }`;
 };

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { ConceptBackground } from '@/components/ConceptBackground';
 import { EventSignupForm } from '@/components/EventSignupForm';
 import { EVENTS, getEventBySlug } from '@/lib/events';
 
@@ -38,7 +39,9 @@ export default async function EventPage({ params }: EventPageProps) {
   }
 
   return (
-    <main className='min-h-screen bg-[var(--bg)] px-4 py-10 text-[var(--brand-cream)] md:px-10'>
+    <main className='relative isolate min-h-screen overflow-x-hidden bg-[var(--bg)] px-4 py-10 text-[var(--brand-cream)] md:px-10'>
+      <ConceptBackground />
+
       <div className='mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_1.05fr]'>
         <section className='glass-card p-6 md:p-8'>
           <Link

@@ -12,6 +12,9 @@ type EmailResult = {
   reason?: string;
 };
 
+const FALLBACK_RECIPIENT = 'abreuanacrist@gmail.com';
+const FALLBACK_FROM = 'abreuanacrist@gmail.com';
+
 const getSesClient = () => {
   const region = process.env.DJ_AWS_REGION || process.env.AWS_REGION;
   const accessKeyId =
@@ -33,7 +36,8 @@ const getSesClient = () => {
 };
 
 const sendEmail = async (payload: EmailPayload): Promise<EmailResult> => {
-  const fromAddress = process.env.DJ_SES_FROM_EMAIL || process.env.SES_FROM_EMAIL;
+  const fromAddress =
+    process.env.DJ_SES_FROM_EMAIL || process.env.SES_FROM_EMAIL || FALLBACK_FROM;
   const client = getSesClient();
 
   if (!fromAddress) {
@@ -93,7 +97,7 @@ type EventNotificationInput = {
 export const sendEventSignupNotification = async (
   input: EventNotificationInput,
 ): Promise<EmailResult> => {
-  const recipient = process.env.EVENT_SIGNUP_NOTIFY_EMAIL;
+  const recipient = process.env.EVENT_SIGNUP_NOTIFY_EMAIL || FALLBACK_RECIPIENT;
 
   if (!recipient) {
     return {
@@ -134,7 +138,7 @@ type BookingNotificationInput = {
 export const sendBookingNotification = async (
   input: BookingNotificationInput,
 ): Promise<EmailResult> => {
-  const recipient = process.env.BOOKING_NOTIFY_EMAIL;
+  const recipient = process.env.BOOKING_NOTIFY_EMAIL || FALLBACK_RECIPIENT;
 
   if (!recipient) {
     return {

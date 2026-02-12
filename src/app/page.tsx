@@ -368,9 +368,9 @@ export default async function HomePage() {
                 <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Email</p>
                 <a
                   className='mt-2 block text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
-                  href='mailto:booking@anajonesdj.com'
+                  href='mailto:abreuanacrist@gmail.com'
                 >
-                  booking@anajonesdj.com
+                  abrauanacrist@gmail.com
                 </a>
               </article>
               <article className='glass-card p-5'>

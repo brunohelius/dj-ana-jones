@@ -13,7 +13,28 @@ type EmailResult = {
 };
 
 const FALLBACK_RECIPIENT = 'abreuanacrist@gmail.com';
-const FALLBACK_FROM = 'abreuanacrist@gmail.com';
+const FALLBACK_RESEND_FROM = 'Ana Jones <onboarding@resend.dev>';
+const FALLBACK_SES_FROM = 'abreuanacrist@gmail.com';
+const RESEND_API_URL = 'https://api.resend.com/emails';
+
+const getResendConfig = () => {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+
+  if (!apiKey) {
+    return null;
+  }
+
+  const fromAddress =
+    process.env.RESEND_FROM_EMAIL ||
+    process.env.DJ_SES_FROM_EMAIL ||
+    process.env.SES_FROM_EMAIL ||
+    FALLBACK_RESEND_FROM;
+
+  return {
+    apiKey,
+    fromAddress,
+  };
+};
 
 const getSesClient = () => {
   const region = process.env.DJ_AWS_REGION || process.env.AWS_REGION;
@@ -35,9 +56,60 @@ const getSesClient = () => {
   });
 };
 
-const sendEmail = async (payload: EmailPayload): Promise<EmailResult> => {
+const sendViaResend = async (payload: EmailPayload): Promise<EmailResult> => {
+  const config = getResendConfig();
+
+  if (!config) {
+    return { sent: false, reason: 'RESEND_API_KEY not configured' };
+  }
+
+  try {
+    const response = await fetch(RESEND_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: config.fromAddress,
+        to: [payload.recipient],
+        subject: payload.subject,
+        html: payload.htmlBody,
+        text: payload.textBody,
+      }),
+    });
+
+    if (!response.ok) {
+      let reason = `Resend error ${response.status}`;
+
+      try {
+        const body = (await response.json()) as {
+          message?: string;
+          error?: {
+            message?: string;
+          };
+        };
+
+        reason = body.error?.message || body.message || reason;
+      } catch {
+        // keep fallback reason
+      }
+
+      return { sent: false, reason };
+    }
+
+    return { sent: true };
+  } catch (error) {
+    return {
+      sent: false,
+      reason: error instanceof Error ? error.message : 'Unknown Resend error',
+    };
+  }
+};
+
+const sendViaSes = async (payload: EmailPayload): Promise<EmailResult> => {
   const fromAddress =
-    process.env.DJ_SES_FROM_EMAIL || process.env.SES_FROM_EMAIL || FALLBACK_FROM;
+    process.env.DJ_SES_FROM_EMAIL || process.env.SES_FROM_EMAIL || FALLBACK_SES_FROM;
   const client = getSesClient();
 
   if (!fromAddress) {
@@ -81,6 +153,39 @@ const sendEmail = async (payload: EmailPayload): Promise<EmailResult> => {
       reason: error instanceof Error ? error.message : 'Unknown SES error',
     };
   }
+};
+
+const sendEmail = async (payload: EmailPayload): Promise<EmailResult> => {
+  const resendConfigured = Boolean(process.env.RESEND_API_KEY?.trim());
+
+  if (resendConfigured) {
+    const resendResult = await sendViaResend(payload);
+
+    if (resendResult.sent) {
+      return resendResult;
+    }
+
+    const sesClient = getSesClient();
+
+    if (!sesClient) {
+      return resendResult;
+    }
+
+    const sesResult = await sendViaSes(payload);
+
+    if (sesResult.sent) {
+      return sesResult;
+    }
+
+    return {
+      sent: false,
+      reason: `Resend: ${resendResult.reason || 'Unknown Resend error'} | SES fallback: ${
+        sesResult.reason || 'Unknown SES error'
+      }`,
+    };
+  }
+
+  return sendViaSes(payload);
 };
 
 type EventNotificationInput = {

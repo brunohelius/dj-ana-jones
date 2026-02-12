@@ -359,8 +359,8 @@ export default async function HomePage() {
             <h2 className='section-title'>Book a DJ set para o seu evento</h2>
             <p className='text-base leading-relaxed text-[var(--muted)]'>
               Envie os dados do seu projeto e receba proposta com formato técnico, fee e rider.
-              O formulário já salva no painel admin e pode disparar notificação por email via AWS
-              SES.
+              O formulário já salva no painel admin e pode disparar notificação por email via
+              Resend.
             </p>
 
             <div className='grid gap-4 sm:grid-cols-2'>
@@ -370,7 +370,7 @@ export default async function HomePage() {
                   className='mt-2 block text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
                   href='mailto:abreuanacrist@gmail.com'
                 >
-                  abrauanacrist@gmail.com
+                  abreuanacrist@gmail.com
                 </a>
               </article>
               <article className='glass-card p-5'>

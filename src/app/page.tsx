@@ -12,7 +12,8 @@ const socialLinks = {
     process.env.NEXT_PUBLIC_SOUNDCLOUD_PROFILE_URL ||
     'https://soundcloud.com',
   spotify:
-    process.env.NEXT_PUBLIC_SPOTIFY_PROFILE_URL || 'https://spotify.com',
+    process.env.NEXT_PUBLIC_SPOTIFY_PROFILE_URL ||
+    'https://open.spotify.com/artist/2GuuKuQBZ3AD3opyrL9l8s',
   youtube:
     process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_URL || 'https://youtube.com',
 };
@@ -26,11 +27,25 @@ const mediaEmbeds = [
       'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1969383299&color=%23ff6b35&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false',
   },
   {
-    title: 'Spotify',
-    description: 'Playlists de referencia e faixas em destaque.',
+    title: 'Spotify Oficial',
+    description: 'Perfil oficial da Ana Jones no Spotify.',
     iframe:
       process.env.NEXT_PUBLIC_SPOTIFY_EMBED_URL ||
-      'https://open.spotify.com/embed/playlist/37i9dQZF1DX4dyzvuaRJ0n?utm_source=generator',
+      'https://open.spotify.com/embed/artist/2GuuKuQBZ3AD3opyrL9l8s?utm_source=generator',
+  },
+  {
+    title: 'Spotify Autorais',
+    description: 'Playlist oficial com faixas autorais da Ana Jones.',
+    iframe:
+      process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_AUTORAIS_EMBED_URL ||
+      'https://open.spotify.com/embed/playlist/2o4zp84d5ZGI2Hi6S1Ern5?utm_source=generator',
+  },
+  {
+    title: 'Spotify Sonzeira',
+    description: 'Curadoria oficial: So pra quem curte sonzeira.',
+    iframe:
+      process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_SONZEIRA_EMBED_URL ||
+      'https://open.spotify.com/embed/playlist/5MbO1bL0hz2FkRu0raWWrk?utm_source=generator',
   },
   {
     title: 'YouTube',
@@ -220,7 +235,7 @@ export default async function HomePage() {
       <section id='midia' className='section-shell'>
         <div className='mx-auto max-w-6xl'>
           <p className='section-kicker'>Midia</p>
-          <h2 className='section-title'>SoundCloud, Spotify e YouTube</h2>
+          <h2 className='section-title'>SoundCloud, Spotify oficial e YouTube</h2>
           <div className='mt-8 grid gap-5 lg:grid-cols-3'>
             {mediaEmbeds.map((media) => (
               <article key={media.title} className='glass-card p-4'>

@@ -15,21 +15,21 @@ export type DjEvent = {
 export const EVENTS: DjEvent[] = [
   {
     slug: 'aniversario-ana-jones-2026',
-    title: 'Aniversario da Ana Jones',
-    dateIso: '2026-08-22',
-    dateLabel: '22 de agosto de 2026',
-    timeLabel: '22h ate 06h',
-    location: 'Clubinho Room',
+    title: 'Aniversario Ana Jones x Heineken',
+    dateIso: '2026-02-14',
+    dateLabel: '14 de fevereiro de 2026',
+    timeLabel: '20h ate 05h',
+    location: 'Heineken Stage - Clubinho Room',
     city: 'Brasilia - DF',
     description:
-      'Noite especial de aniversario com set extended da Ana Jones, convidados da cena local e experiencia visual imersiva.',
+      'Noite especial de aniversario da Ana Jones com experiencia Heineken, set extended, convidados da cena local e lista de nomes para o publico.',
     highlights: [
-      'Set principal de 3 horas por Ana Jones',
-      'Line-up com convidados da Clubinho Room',
-      'Aftermovie profissional para redes sociais',
+      'Edicao especial de aniversario com assinatura Heineken',
+      'Set extended da Ana Jones com convidados da Clubinho Room',
+      'Experiencia visual e ativações de marca durante a noite',
     ],
     listRules: [
-      'Lista valida ate 23h59 do dia do evento.',
+      'Lista valida ate 23h00 do dia 14/02.',
       'Nome completo e documento obrigatorios na entrada.',
       'Cada inscricao permite ate 2 acompanhantes.',
     ],

@@ -282,8 +282,8 @@ export default async function HomePage() {
           <p className='section-kicker'>Galeria</p>
           <h2 className='section-title'>Fotos e imagens oficiais</h2>
           <div className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-            {galleryImages.map((image) => (
-              <figure key={image.src} className='gallery-tile'>
+            {galleryImages.map((image, index) => (
+              <figure key={`${image.src}-${index}`} className='gallery-tile'>
                 <img src={image.src} alt={image.alt} className='h-full w-full object-cover' />
               </figure>
             ))}

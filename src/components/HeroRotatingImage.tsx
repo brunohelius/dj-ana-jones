@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'ana-jones:hero-image-sequence';
 
@@ -14,6 +14,8 @@ const HERO_IMAGES = [
   '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-large.jpg',
   '/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-large.png',
 ];
+
+const FALLBACK_IMAGE = HERO_IMAGES[0];
 
 const getNextIndex = (total: number, previousIndex: number) => {
   if (total <= 1) {
@@ -49,7 +51,17 @@ const getNextImage = () => {
 };
 
 export const HeroRotatingImage = () => {
-  const image = useMemo(() => getNextImage(), []);
+  const [image, setImage] = useState(FALLBACK_IMAGE);
+
+  useEffect(() => {
+    const animationFrame = window.requestAnimationFrame(() => {
+      setImage(getNextImage());
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
     <img src={image} alt='Ana Jones' className='h-full w-full object-cover' />

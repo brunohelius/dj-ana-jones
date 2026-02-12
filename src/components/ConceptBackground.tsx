@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'ana-jones:concept-bg-sequence';
 
@@ -8,6 +8,7 @@ const PRESSKIT_BACKGROUNDS = Array.from({ length: 28 }, (_, index) => {
   const fileNumber = String(index + 1).padStart(2, '0');
   return `/gallery/presskit/backgrounds/ana-presskit-${fileNumber}.jpg`;
 });
+const FALLBACK_BACKGROUND = PRESSKIT_BACKGROUNDS[0];
 
 const shuffle = (values: number[], seed: number) => {
   const shuffled = [...values];
@@ -60,7 +61,7 @@ const makeQueue = (total: number) => shuffle(Array.from({ length: total }, (_, i
 
 const getNextBackground = () => {
   if (typeof window === 'undefined') {
-    return PRESSKIT_BACKGROUNDS[0];
+    return FALLBACK_BACKGROUND;
   }
 
   const total = PRESSKIT_BACKGROUNDS.length;
@@ -105,7 +106,17 @@ const getNextBackground = () => {
 };
 
 export const ConceptBackground = () => {
-  const [background] = useState(() => getNextBackground());
+  const [background, setBackground] = useState(FALLBACK_BACKGROUND);
+
+  useEffect(() => {
+    const animationFrame = window.requestAnimationFrame(() => {
+      setBackground(getNextBackground());
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   return (
     <div className='concept-bg-root' aria-hidden='true'>

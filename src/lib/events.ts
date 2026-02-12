@@ -18,8 +18,8 @@ export const EVENTS: DjEvent[] = [
     title: 'Aniversario Ana Jones x Heineken',
     dateIso: '2026-02-14',
     dateLabel: '14 de fevereiro de 2026',
-    timeLabel: '20h ate 05h',
-    location: 'Heineken Stage - Clubinho Room',
+    timeLabel: '16h',
+    location: 'Air Music',
     city: 'Brasilia - DF',
     description:
       'Noite especial de aniversario da Ana Jones com experiencia Heineken, set extended, convidados da cena local e lista de nomes para o publico.',

@@ -111,6 +111,16 @@ export default async function HomePage() {
             <h1 className='font-display text-[3.2rem] uppercase leading-[0.9] tracking-[0.04em] text-[var(--brand-cream)] sm:text-[4.4rem] lg:text-[6rem]'>
               DJ Ana Jones
             </h1>
+            <figure className='max-w-xl overflow-hidden rounded-2xl border border-white/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]'>
+              <img
+                src='/gallery/real/ana-zamna-festival.jpeg'
+                alt='DJ Ana Jones em foto publicada na DJane Mag'
+                className='h-full w-full object-cover'
+              />
+              <figcaption className='border-t border-white/10 px-3 py-2 text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>
+                Foto publicada na DJane Mag
+              </figcaption>
+            </figure>
             <p className='max-w-2xl text-base leading-relaxed text-[var(--muted)] md:text-lg'>
               Sonoridade eletrônica com identidade autoral, sets energéticos e curadoria de pista.
               Ana Jones atua em Brasilia e lidera a cena da Clubinho Room com experiencias que

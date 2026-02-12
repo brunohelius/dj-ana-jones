@@ -64,7 +64,6 @@ const getNextBackground = () => {
   }
 
   const total = PRESSKIT_BACKGROUNDS.length;
-  const seedBase = Date.now();
   const source = getStoredSequence(total);
 
   let queue: number[] = makeQueue(total);

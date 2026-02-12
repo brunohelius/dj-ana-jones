@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { BookingForm } from '@/components/BookingForm';
 import { ConceptBackground } from '@/components/ConceptBackground';
+import { HeroRotatingImage } from '@/components/HeroRotatingImage';
 import { EVENTS } from '@/lib/events';
 import { getInstagramPosts } from '@/lib/instagram';
 
@@ -71,6 +72,26 @@ const galleryImages = [
     alt: 'Arte do set Clubinho Room Ed Goiania',
   },
   {
+    src: '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-large.jpg',
+    alt: 'Techno Connection Radio com Ana Jones',
+  },
+  {
+    src: '/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-large.png',
+    alt: 'Capa ampliada de Sente e Febre com Ana Jones',
+  },
+  {
+    src: '/gallery/real/ana-avatar-soundcloud.jpg',
+    alt: 'Foto da identidade visual da Ana Jones no SoundCloud',
+  },
+  {
+    src: '/gallery/real/ana-sente-cover.jpg',
+    alt: 'Capa digital de Sente - Ana Jones',
+  },
+  {
+    src: '/gallery/real/ana-dreams-release.jpg',
+    alt: 'Detalhe da capa de Dreams de Ana Jones',
+  },
+  {
     src: '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-t1080x1080.jpg',
     alt: 'Techno Connection Radio #025 com Ana Jones',
   },
@@ -130,13 +151,9 @@ export default async function HomePage() {
               DJ Ana Jones
             </h1>
             <figure className='max-w-xl overflow-hidden rounded-2xl border border-white/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]'>
-              <img
-                src='/gallery/real/ana-zamna-festival.jpeg'
-                alt='DJ Ana Jones em foto publicada na DJane Mag'
-                className='h-full w-full object-cover'
-              />
+              <HeroRotatingImage />
               <figcaption className='border-t border-white/10 px-3 py-2 text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>
-                Foto publicada na DJane Mag
+                Foto destaque rotativa da Ana Jones
               </figcaption>
             </figure>
             <p className='max-w-2xl text-base leading-relaxed text-[var(--muted)] md:text-lg'>

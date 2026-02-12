@@ -187,6 +187,32 @@ a {
   animation: fade-up 0.8s ease both;
 }
 
+.concept-bg-root {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.concept-bg-image {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.36;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.concept-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 4, 8, 0.15) 0%, rgba(3, 4, 8, 0.68) 55%, rgba(3, 4, 8, 0.88) 100%),
+    radial-gradient(circle at 12% 18%, rgba(255, 107, 53, 0.25), transparent 48%),
+    radial-gradient(circle at 88% 22%, rgba(51, 225, 237, 0.18), transparent 52%);
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;

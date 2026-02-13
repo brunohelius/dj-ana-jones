@@ -20,13 +20,13 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
 
   if (!event) {
     return {
-      title: 'Evento nao encontrado | DJ Ana Jones',
+      title: 'Evento nao encontrado',
     };
   }
 
   return {
-    title: `${event.title} | DJ Ana Jones`,
-    description: `${event.dateLabel} em ${event.city}. Reserve seu nome na lista da DJ Ana Jones.`,
+    title: event.title,
+    description: `${event.dateLabel} em ${event.city}. Reserve seu nome na lista da Ana Jones.`,
   };
 }
 

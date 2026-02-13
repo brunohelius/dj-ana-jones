@@ -15,9 +15,27 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: 'DJ Ana Jones | Site Oficial',
+  title: {
+    default: 'Ana Jones',
+    template: '%s | Ana Jones',
+  },
   description:
-    'Site oficial da DJ Ana Jones, fundadora da Clubinho Room em Brasilia. Agenda, galeria, midia, contratacao e lista de eventos.',
+    'Site oficial da Ana Jones, fundadora da Clubinho Room em Brasilia. Agenda, galeria, midia, contratacao e lista de eventos.',
+  openGraph: {
+    title: 'Ana Jones',
+    description:
+      'Site oficial da Ana Jones, fundadora da Clubinho Room em Brasilia. Agenda, galeria, midia, contratacao e lista de eventos.',
+    url: 'https://anajonesdj.com',
+    siteName: 'Ana Jones',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Ana Jones',
+    description:
+      'Site oficial da Ana Jones, fundadora da Clubinho Room em Brasilia. Agenda, galeria, midia, contratacao e lista de eventos.',
+  },
 };
 
 export default function RootLayout({

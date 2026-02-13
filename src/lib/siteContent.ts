@@ -25,6 +25,35 @@ const makeDefaultContent = (): SiteContent => ({
 
 const normalizeText = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
 
+const normalizeBoolean = (value: unknown, fallback: boolean) => {
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  if (typeof value === 'number') {
+    if (value === 1) {
+      return true;
+    }
+    if (value === 0) {
+      return false;
+    }
+  }
+
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+
+    if (normalized === 'true') {
+      return true;
+    }
+
+    if (normalized === 'false') {
+      return false;
+    }
+  }
+
+  return fallback;
+};
+
 const normalizeStringArray = (value: unknown) => {
   if (!Array.isArray(value)) {
     return [];
@@ -79,6 +108,8 @@ const normalizeEvent = (value: unknown): DjEvent | null => {
   const highlights = normalizeStringArray(record.highlights);
   const listRules = normalizeStringArray(record.listRules);
   const coverImage = normalizeText(record.coverImage);
+  const signupOpen = normalizeBoolean(record.signupOpen, true);
+  const signupClosedMessage = normalizeText(record.signupClosedMessage);
 
   if (!slug || !title || !dateIso || !dateLabel) {
     return null;
@@ -96,6 +127,8 @@ const normalizeEvent = (value: unknown): DjEvent | null => {
     highlights,
     listRules,
     coverImage,
+    signupOpen,
+    signupClosedMessage,
   };
 };
 
@@ -157,4 +190,3 @@ export const getEventBySlug = async (slug: string) => {
   const events = await getEvents();
   return events.find((event) => event.slug === safeSlug);
 };
-

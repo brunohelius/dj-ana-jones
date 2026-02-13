@@ -69,6 +69,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (event.signupOpen === false) {
+      return NextResponse.json(
+        {
+          message:
+            event.signupClosedMessage?.trim() ||
+            'Lista encerrada para este evento.',
+        },
+        { status: 410 },
+      );
+    }
+
     const signup = await createEventSignup({
       eventSlug,
       name,

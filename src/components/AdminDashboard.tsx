@@ -43,6 +43,8 @@ type SiteEvent = {
   highlights: string[];
   listRules: string[];
   coverImage: string;
+  signupOpen?: boolean;
+  signupClosedMessage?: string;
 };
 
 type SiteContent = {
@@ -330,6 +332,8 @@ export const AdminDashboard = () => {
         highlights: [],
         listRules: [],
         coverImage: seedCover,
+        signupOpen: true,
+        signupClosedMessage: '',
       };
 
       return {
@@ -660,6 +664,7 @@ export const AdminDashboard = () => {
                         {event.title || '(Sem titulo)'}{' '}
                         <span className='text-[var(--muted)]'>
                           {event.slug ? `• ${event.slug}` : '• sem-slug'}
+                          {event.signupOpen === false ? ' • lista encerrada' : ''}
                         </span>
                       </summary>
 
@@ -711,6 +716,22 @@ export const AdminDashboard = () => {
                           value={event.coverImage}
                           onChange={(e) => updateEvent(index, { coverImage: e.target.value })}
                           placeholder='Imagem de capa (ex: /gallery/real/ana-zamna-festival.jpeg)'
+                        />
+                        <label className='flex items-center gap-3 rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-sm text-[var(--muted)] md:col-span-2'>
+                          <input
+                            type='checkbox'
+                            checked={event.signupOpen !== false}
+                            onChange={(e) => updateEvent(index, { signupOpen: e.target.checked })}
+                          />
+                          Lista aberta (aceitar inscricoes)
+                        </label>
+                        <input
+                          className='field md:col-span-2'
+                          value={event.signupClosedMessage || ''}
+                          onChange={(e) =>
+                            updateEvent(index, { signupClosedMessage: e.target.value })
+                          }
+                          placeholder='Mensagem quando a lista estiver encerrada (opcional)'
                         />
                         <textarea
                           className='field md:col-span-2'

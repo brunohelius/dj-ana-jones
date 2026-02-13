@@ -36,6 +36,11 @@ export default async function EventPage({ params }: EventPageProps) {
     notFound();
   }
 
+  const signupOpen = event.signupOpen !== false;
+  const closedMessage =
+    event.signupClosedMessage?.trim() ||
+    'A lista para este evento foi encerrada. Para duvidas ou suporte, fale com a equipe pelo Instagram @anajonesdj.';
+
   return (
     <main className='relative isolate min-h-screen overflow-x-hidden bg-[var(--bg)] px-4 py-10 text-[var(--brand-cream)] md:px-10'>
       <ConceptBackground />
@@ -48,6 +53,12 @@ export default async function EventPage({ params }: EventPageProps) {
           >
             Voltar para o site
           </Link>
+
+          {!signupOpen && (
+            <p className='mt-4 inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
+              Lista encerrada
+            </p>
+          )}
 
           <h1 className='mt-5 text-4xl font-display uppercase leading-none md:text-6xl'>
             {event.title}
@@ -100,7 +111,32 @@ export default async function EventPage({ params }: EventPageProps) {
         </section>
 
         <section>
-          <EventSignupForm eventSlug={event.slug} eventTitle={event.title} />
+          {signupOpen ? (
+            <EventSignupForm eventSlug={event.slug} eventTitle={event.title} />
+          ) : (
+            <div className='glass-card p-6 md:p-8'>
+              <h2 className='text-2xl font-display uppercase tracking-[0.08em] text-[var(--brand-cream)]'>
+                Lista encerrada
+              </h2>
+              <p className='mt-3 text-sm text-[var(--muted)]'>{closedMessage}</p>
+              <div className='mt-5 grid gap-3 sm:grid-cols-2'>
+                <a
+                  className='btn-secondary inline-flex justify-center'
+                  href='mailto:abreuanacrist@gmail.com'
+                >
+                  Enviar Email
+                </a>
+                <a
+                  className='btn-primary inline-flex justify-center'
+                  href='https://instagram.com/anajonesdj'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  Abrir Instagram
+                </a>
+              </div>
+            </div>
+          )}
         </section>
       </div>
     </main>

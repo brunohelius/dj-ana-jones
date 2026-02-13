@@ -10,6 +10,8 @@ export type DjEvent = {
   highlights: string[];
   listRules: string[];
   coverImage: string;
+  signupOpen?: boolean;
+  signupClosedMessage?: string;
 };
 
 export const EVENTS: DjEvent[] = [
@@ -34,6 +36,7 @@ export const EVENTS: DjEvent[] = [
       'Cada inscricao permite ate 2 acompanhantes.',
     ],
     coverImage: '/gallery/real/ana-zamna-festival.jpeg',
+    signupOpen: true,
   },
   {
     slug: 'sunset-clubinho-edition',
@@ -56,6 +59,7 @@ export const EVENTS: DjEvent[] = [
       'Check-in com nome da lista ate 19h30.',
     ],
     coverImage: '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-t1080x1080.jpg',
+    signupOpen: true,
   },
 ];
 

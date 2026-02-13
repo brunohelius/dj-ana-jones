@@ -135,25 +135,38 @@ export default async function HomePage() {
           <div className='glass-card fade-up p-6'>
             <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Próximos destaques</p>
             <div className='mt-4 space-y-4'>
-              {events.slice(0, 2).map((event) => (
-                <article key={event.slug} className='rounded-2xl border border-white/15 bg-white/5 p-4'>
-                  <p className='text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
-                    {event.dateLabel}
-                  </p>
-                  <h2 className='mt-2 text-xl font-semibold text-[var(--brand-cream)]'>
-                    {event.title}
-                  </h2>
-                  <p className='mt-2 text-sm text-[var(--muted)]'>
-                    {event.location} • {event.city}
-                  </p>
-                  <Link
-                    href={`/eventos/${event.slug}`}
-                    className='mt-4 inline-flex text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
+              {events.slice(0, 2).map((event) => {
+                const signupOpen = event.signupOpen !== false;
+
+                return (
+                  <article
+                    key={event.slug}
+                    className='rounded-2xl border border-white/15 bg-white/5 p-4'
                   >
-                    Entrar na lista
-                  </Link>
-                </article>
-              ))}
+                    <p className='text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
+                      {event.dateLabel}
+                    </p>
+                    <h2 className='mt-2 text-xl font-semibold text-[var(--brand-cream)]'>
+                      {event.title}
+                    </h2>
+                    <p className='mt-2 text-sm text-[var(--muted)]'>
+                      {event.location} • {event.city}
+                    </p>
+                    {signupOpen ? (
+                      <Link
+                        href={`/eventos/${event.slug}`}
+                        className='mt-4 inline-flex text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
+                      >
+                        Entrar na lista
+                      </Link>
+                    ) : (
+                      <span className='mt-4 inline-flex text-sm font-semibold text-[var(--muted)]'>
+                        Lista encerrada
+                      </span>
+                    )}
+                  </article>
+                );
+              })}
             </div>
             <div className='mt-6 flex flex-wrap gap-2 text-xs uppercase tracking-[0.1em] text-[var(--muted)]'>
               <a href={socialLinks.instagram} target='_blank' rel='noreferrer'>
@@ -289,26 +302,40 @@ export default async function HomePage() {
           <p className='section-kicker'>Eventos</p>
           <h2 className='section-title'>Agenda + link de lista para convidados</h2>
           <div className='mt-8 grid gap-5 md:grid-cols-2'>
-            {events.map((event) => (
-              <article key={event.slug} className='glass-card overflow-hidden'>
-                <img src={event.coverImage} alt={event.title} className='h-44 w-full object-cover' />
-                <div className='p-5'>
-                  <p className='text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
-                    {event.dateLabel}
-                  </p>
-                  <h3 className='mt-2 text-2xl font-display uppercase tracking-[0.06em]'>
-                    {event.title}
-                  </h3>
-                  <p className='mt-2 text-sm text-[var(--muted)]'>
-                    {event.location} • {event.city}
-                  </p>
-                  <p className='mt-4 text-sm text-[var(--muted)]'>{event.description}</p>
-                  <Link href={`/eventos/${event.slug}`} className='btn-primary mt-5 inline-flex'>
-                    Abrir Lista do Evento
-                  </Link>
-                </div>
-              </article>
-            ))}
+            {events.map((event) => {
+              const signupOpen = event.signupOpen !== false;
+
+              return (
+                <article key={event.slug} className='glass-card overflow-hidden'>
+                  <img
+                    src={event.coverImage}
+                    alt={event.title}
+                    className='h-44 w-full object-cover'
+                  />
+                  <div className='p-5'>
+                    <p className='text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
+                      {event.dateLabel}
+                    </p>
+                    <h3 className='mt-2 text-2xl font-display uppercase tracking-[0.06em]'>
+                      {event.title}
+                    </h3>
+                    <p className='mt-2 text-sm text-[var(--muted)]'>
+                      {event.location} • {event.city}
+                    </p>
+                    <p className='mt-4 text-sm text-[var(--muted)]'>{event.description}</p>
+                    {signupOpen ? (
+                      <Link href={`/eventos/${event.slug}`} className='btn-primary mt-5 inline-flex'>
+                        Abrir Lista do Evento
+                      </Link>
+                    ) : (
+                      <span className='btn-secondary mt-5 inline-flex cursor-not-allowed opacity-70'>
+                        Lista encerrada
+                      </span>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

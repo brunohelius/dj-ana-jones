@@ -34,6 +34,7 @@ npx netlify deploy --prod --build
 2. Testar evento em `/eventos/aniversario-ana-jones-2026`
 3. Testar formulario de contratacao na home
 4. Abrir `/admin`, inserir `ADMIN_DASHBOARD_KEY` e confirmar dados
+5. (Opcional) No `/admin`, abrir **Conteudo do Site** e validar que eventos/galeria carregam
 
 ## Variaveis obrigatorias no .env
 Obrigatorias para funcionamento completo:
@@ -65,6 +66,12 @@ Opcionais (email e instagram API):
 Os formulários sao salvos em:
 - `s3://$DJ_AWS_S3_BUCKET/dj-ana-jones/event-signups.json`
 - `s3://$DJ_AWS_S3_BUCKET/dj-ana-jones/booking-requests.json`
+
+## Conteudo dinamico do site (eventos/galeria/foto destaque)
+O conteudo exibido no site pode ser editado em `/admin` -> **Conteudo do Site**.
+
+Persistido em:
+- `s3://$DJ_AWS_S3_BUCKET/dj-ana-jones/site-content.json`
 
 ## Observacao SES
 Se o SES nao tiver identidade verificada, os formularios continuam funcionando,

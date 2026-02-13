@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getEventBySlug } from '@/lib/events';
 import { sendEventSignupNotification } from '@/lib/email';
+import { getEvents, getEventBySlug } from '@/lib/siteContent';
 import { createEventSignup, listEventSignups } from '@/lib/signups';
 
 const getAdminKey = (request: NextRequest) => {
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const event = getEventBySlug(eventSlug);
+    const event = await getEventBySlug(eventSlug);
 
     if (!event) {
       return NextResponse.json(
@@ -126,6 +126,9 @@ export async function GET(request: NextRequest) {
   const signups = await listEventSignups(eventSlug);
 
   if (format === 'csv') {
+    const events = await getEvents();
+    const eventTitleBySlug = new Map(events.map((event) => [event.slug, event.title]));
+
     const header = [
       'createdAt',
       'eventSlug',
@@ -145,11 +148,11 @@ export async function GET(request: NextRequest) {
     };
 
     const rows = signups.map((signup) => {
-      const event = getEventBySlug(signup.eventSlug);
+      const eventTitle = eventTitleBySlug.get(signup.eventSlug) || '';
       return [
         signup.createdAt,
         signup.eventSlug,
-        event?.title || '',
+        eventTitle,
         signup.name,
         signup.email || '',
         signup.phone || '',

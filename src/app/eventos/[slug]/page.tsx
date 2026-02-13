@@ -4,19 +4,17 @@ import { notFound } from 'next/navigation';
 
 import { ConceptBackground } from '@/components/ConceptBackground';
 import { EventSignupForm } from '@/components/EventSignupForm';
-import { EVENTS, getEventBySlug } from '@/lib/events';
+import { getEventBySlug } from '@/lib/siteContent';
+
+export const dynamic = 'force-dynamic';
 
 type EventPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return EVENTS.map((event) => ({ slug: event.slug }));
-}
-
 export async function generateMetadata({ params }: EventPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await getEventBySlug(slug);
 
   if (!event) {
     return {
@@ -32,7 +30,7 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
 
 export default async function EventPage({ params }: EventPageProps) {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await getEventBySlug(slug);
 
   if (!event) {
     notFound();

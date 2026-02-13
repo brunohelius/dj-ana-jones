@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { BookingForm } from '@/components/BookingForm';
 import { ConceptBackground } from '@/components/ConceptBackground';
 import { HeroRotatingImage } from '@/components/HeroRotatingImage';
-import { EVENTS } from '@/lib/events';
 import { getInstagramPosts } from '@/lib/instagram';
+import { getSiteContent } from '@/lib/siteContent';
+
+export const dynamic = 'force-dynamic';
 
 const socialLinks = {
   instagram:
@@ -58,55 +60,12 @@ const mediaEmbeds = [
   },
 ];
 
-const galleryImages = [
-  {
-    src: '/gallery/real/ana-zamna-festival.jpeg',
-    alt: 'Ana Jones em apresentacao no Zamna Festival',
-  },
-  {
-    src: '/gallery/real/ana-dreams-release.jpg',
-    alt: 'Capa de lancamento do EP Dreams de Ana Jones',
-  },
-  {
-    src: '/gallery/real/ana-clubinho-goiania-artwork.png',
-    alt: 'Arte do set Clubinho Room Ed Goiania',
-  },
-  {
-    src: '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-large.jpg',
-    alt: 'Techno Connection Radio com Ana Jones',
-  },
-  {
-    src: '/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-large.png',
-    alt: 'Capa ampliada de Sente e Febre com Ana Jones',
-  },
-  {
-    src: '/gallery/real/ana-avatar-soundcloud.jpg',
-    alt: 'Foto da identidade visual da Ana Jones no SoundCloud',
-  },
-  {
-    src: '/gallery/real/ana-sente-cover.jpg',
-    alt: 'Capa digital de Sente - Ana Jones',
-  },
-  {
-    src: '/gallery/real/ana-dreams-release.jpg',
-    alt: 'Detalhe da capa de Dreams de Ana Jones',
-  },
-  {
-    src: '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-t1080x1080.jpg',
-    alt: 'Techno Connection Radio #025 com Ana Jones',
-  },
-  {
-    src: '/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-t1080x1080.png',
-    alt: 'Capa dos tracks Sente e Febre com Ana Jones',
-  },
-  {
-    src: '/gallery/real/ana-soundcloud-visual.jpg',
-    alt: 'Visual oficial de artista de Ana Jones no SoundCloud',
-  },
-];
-
 export default async function HomePage() {
+  const siteContent = await getSiteContent();
   const instagramPosts = await getInstagramPosts(6);
+  const events = [...siteContent.events].sort((a, b) => a.dateIso.localeCompare(b.dateIso));
+  const galleryImages = siteContent.galleryImages;
+  const heroImages = siteContent.heroImages.map((image) => image.src);
 
   return (
     <main className='relative isolate min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--brand-cream)]'>
@@ -151,7 +110,9 @@ export default async function HomePage() {
               Ana Jones
             </h1>
             <figure className='max-w-xl overflow-hidden rounded-2xl border border-white/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]'>
-              <HeroRotatingImage />
+              <div className='relative w-full' style={{ aspectRatio: '16 / 10' }}>
+                <HeroRotatingImage images={heroImages} alt='Ana Jones' />
+              </div>
               <figcaption className='border-t border-white/10 px-3 py-2 text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>
                 Foto destaque rotativa da Ana Jones
               </figcaption>
@@ -174,7 +135,7 @@ export default async function HomePage() {
           <div className='glass-card fade-up p-6'>
             <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Próximos destaques</p>
             <div className='mt-4 space-y-4'>
-              {EVENTS.slice(0, 2).map((event) => (
+              {events.slice(0, 2).map((event) => (
                 <article key={event.slug} className='rounded-2xl border border-white/15 bg-white/5 p-4'>
                   <p className='text-xs uppercase tracking-[0.12em] text-[var(--brand-orange)]'>
                     {event.dateLabel}
@@ -328,7 +289,7 @@ export default async function HomePage() {
           <p className='section-kicker'>Eventos</p>
           <h2 className='section-title'>Agenda + link de lista para convidados</h2>
           <div className='mt-8 grid gap-5 md:grid-cols-2'>
-            {EVENTS.map((event) => (
+            {events.map((event) => (
               <article key={event.slug} className='glass-card overflow-hidden'>
                 <img src={event.coverImage} alt={event.title} className='h-44 w-full object-cover' />
                 <div className='p-5'>

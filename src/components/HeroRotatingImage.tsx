@@ -2,43 +2,57 @@
 
 import { useEffect, useState } from 'react';
 
+import { DEFAULT_HERO_IMAGES } from '@/lib/siteDefaults';
+
 const STORAGE_KEY = 'ana-jones:hero-image-sequence';
 
-const HERO_IMAGES = [
-  '/gallery/real/ana-profile-djanemag.jpeg',
-  '/gallery/real/ana-zamna-festival.jpeg',
-  '/gallery/real/ana-dreams-release.jpg',
-  '/gallery/real/ana-avatar-soundcloud.jpg',
-  '/gallery/real/ana-sente-cover.jpg',
-  '/gallery/real/ana-clubinho-goiania-artwork.png',
-  '/gallery/real/artworks-MyVfYpeTrDzKDT2m-G36AhA-large.jpg',
-  '/gallery/real/artworks-QAlcAWzmLyqFfcWx-MWgViQ-large.png',
-];
+const DEFAULT_IMAGES = DEFAULT_HERO_IMAGES.map((image) => image.src);
+const FALLBACK_IMAGE = DEFAULT_IMAGES[0];
 
-const FALLBACK_IMAGE = HERO_IMAGES[0];
+type HeroRotatingImageProps = {
+  images?: string[];
+  alt?: string;
+};
 
-const getNextIndex = (total: number, previousIndex: number) => {
+const getStoredIndex = (total: number) => {
+  try {
+    const rawIndex = Number.parseInt(window.localStorage.getItem(STORAGE_KEY) || '', 10);
+
+    if (!Number.isInteger(rawIndex)) {
+      return null;
+    }
+
+    if (rawIndex < 0 || rawIndex >= total) {
+      return null;
+    }
+
+    return rawIndex;
+  } catch {
+    return null;
+  }
+};
+
+const getNextIndex = (total: number, previousIndex: number | null) => {
   if (total <= 1) {
     return 0;
   }
 
-  let nextIndex = Math.floor(Math.random() * total);
-
-  if (nextIndex === previousIndex) {
-    nextIndex = (nextIndex + 1) % total;
+  if (previousIndex === null) {
+    return Math.floor(Math.random() * total);
   }
 
-  return nextIndex;
+  return (previousIndex + 1) % total;
 };
 
-const getNextImage = () => {
+const getNextImage = (images: string[]) => {
+  const safeImages = images.length > 0 ? images : DEFAULT_IMAGES;
+
   if (typeof window === 'undefined') {
-    return HERO_IMAGES[0];
+    return safeImages[0] || FALLBACK_IMAGE;
   }
 
-  const total = HERO_IMAGES.length;
-  const rawIndex = Number.parseInt(window.localStorage.getItem(STORAGE_KEY) || '', 10);
-  const previousIndex = Number.isInteger(rawIndex) ? rawIndex : -1;
+  const total = safeImages.length;
+  const previousIndex = getStoredIndex(total);
   const nextIndex = getNextIndex(total, previousIndex);
 
   try {
@@ -47,23 +61,24 @@ const getNextImage = () => {
     // localStorage is optional.
   }
 
-  return HERO_IMAGES[nextIndex];
+  return safeImages[nextIndex] || FALLBACK_IMAGE;
 };
 
-export const HeroRotatingImage = () => {
+export const HeroRotatingImage = ({ images, alt }: HeroRotatingImageProps) => {
+  const safeImages = images && images.length > 0 ? images : DEFAULT_IMAGES;
   const [image, setImage] = useState(FALLBACK_IMAGE);
 
   useEffect(() => {
     const animationFrame = window.requestAnimationFrame(() => {
-      setImage(getNextImage());
+      setImage(getNextImage(safeImages));
     });
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [safeImages]);
 
   return (
-    <img src={image} alt='Ana Jones' className='h-full w-full object-cover' />
+    <img src={image} alt={alt || 'Ana Jones'} className='h-full w-full object-cover' />
   );
 };

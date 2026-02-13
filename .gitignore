@@ -49,3 +49,6 @@ next-env.d.ts
 # Cloudflare local state
 .wrangler
 .dev.vars
+
+# Presskit / raw images (kept outside git)
+/assets/

@@ -22,10 +22,10 @@ export const EVENTS: DjEvent[] = [
     location: 'Air Music',
     city: 'Brasilia - DF',
     description:
-      'Noite especial de aniversario da Ana Jones com experiencia Heineken, set extended, convidados da cena local e lista de nomes para o publico.',
+      'Sunset especial de aniversario da Ana Jones com experiencia Heineken. Inicio as 16h, set extended, convidados da cena local e lista de nomes para o publico.',
     highlights: [
       'Edicao especial de aniversario com assinatura Heineken',
-      'Set extended da Ana Jones com convidados da Clubinho Room',
+      'Sunset a partir das 16h com set extended da Ana Jones',
       'Experiencia visual e ativações de marca durante a noite',
     ],
     listRules: [

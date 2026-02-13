@@ -148,7 +148,7 @@ export default async function HomePage() {
           <div className='space-y-7 fade-up'>
             <p className='badge'>Brasilia • Fundadora Clubinho Room</p>
             <h1 className='font-display text-[3.2rem] uppercase leading-[0.9] tracking-[0.04em] text-[var(--brand-cream)] sm:text-[4.4rem] lg:text-[6rem]'>
-              DJ Ana Jones
+              Ana Jones
             </h1>
             <figure className='max-w-xl overflow-hidden rounded-2xl border border-white/20 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.45)]'>
               <HeroRotatingImage />
@@ -393,7 +393,7 @@ export default async function HomePage() {
 
       <footer className='border-t border-white/10 px-4 py-8 text-xs uppercase tracking-[0.12em] text-[var(--muted)] md:px-10'>
         <div className='mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between'>
-          <p>DJ Ana Jones • Brasilia • Clubinho Room</p>
+          <p>Ana Jones • Brasilia • Clubinho Room</p>
           <div className='flex gap-4'>
             <a href='/admin' className='hover:text-[var(--brand-cream)]'>
               Admin

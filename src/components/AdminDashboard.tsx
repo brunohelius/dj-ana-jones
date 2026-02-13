@@ -86,7 +86,7 @@ export const AdminDashboard = () => {
       <div className='mx-auto max-w-6xl space-y-6'>
         <header className='glass-card p-6'>
           <h1 className='text-3xl font-display uppercase tracking-[0.08em]'>
-            Painel Admin - DJ Ana Jones
+            Painel Admin - Ana Jones
           </h1>
           <p className='mt-2 text-sm text-[var(--muted)]'>
             Consulte interessados da lista de eventos e pedidos de contratacao.

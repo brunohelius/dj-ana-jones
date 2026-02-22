@@ -106,6 +106,34 @@ const normalizeImages = (value: unknown, fallback: SiteImage[]) => {
   return images.length > 0 ? images : fallback;
 };
 
+// Variant that allows empty arrays (for content that user can fully clear)
+const normalizeImagesAllowEmpty = (value: unknown, fallback: SiteImage[]) => {
+  if (!Array.isArray(value)) {
+    return fallback;
+  }
+
+  return value
+    .map((item) => {
+      if (typeof item !== 'object' || item === null) {
+        return null;
+      }
+
+      const record = item as Record<string, unknown>;
+      const src = normalizeText(record.src);
+      const alt = normalizeText(record.alt);
+
+      if (!src) {
+        return null;
+      }
+
+      return {
+        src,
+        alt: alt || 'Ana Jones',
+      };
+    })
+    .filter((item): item is SiteImage => item !== null);
+};
+
 const normalizeEvent = (value: unknown): DjEvent | null => {
   if (typeof value !== 'object' || value === null) {
     return null;
@@ -156,7 +184,7 @@ const normalizeEvents = (value: unknown, fallback: DjEvent[]) => {
     .map((item) => normalizeEvent(item))
     .filter((item): item is DjEvent => item !== null);
 
-  return events.length > 0 ? events : fallback;
+  return events;
 };
 
 const normalizeProfile = (value: unknown, fallback: SiteProfile): SiteProfile => {
@@ -218,7 +246,7 @@ const normalizeMediaEmbeds = (value: unknown, fallback: SiteMediaEmbed[]): SiteM
     })
     .filter((item): item is SiteMediaEmbed => item !== null);
 
-  return embeds.length > 0 ? embeds : fallback;
+  return embeds;
 };
 
 const normalizeContactInfo = (value: unknown, fallback: SiteContactInfo): SiteContactInfo => {
@@ -245,7 +273,7 @@ const normalizeContent = (value: unknown, fallback: SiteContent): SiteContent =>
 
   return {
     heroImages: normalizeImages(record.heroImages, fallback.heroImages),
-    galleryImages: normalizeImages(record.galleryImages, fallback.galleryImages),
+    galleryImages: normalizeImagesAllowEmpty(record.galleryImages, fallback.galleryImages),
     events: normalizeEvents(record.events, fallback.events),
     profile: normalizeProfile(record.profile, fallback.profile),
     socialLinks: normalizeSocialLinks(record.socialLinks, fallback.socialLinks),

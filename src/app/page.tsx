@@ -8,64 +8,13 @@ import { getSiteContent } from '@/lib/siteContent';
 
 export const dynamic = 'force-dynamic';
 
-const socialLinks = {
-  instagram:
-    process.env.NEXT_PUBLIC_INSTAGRAM_PROFILE_URL ||
-    'https://instagram.com/anajonesdj',
-  soundcloud:
-    process.env.NEXT_PUBLIC_SOUNDCLOUD_PROFILE_URL ||
-    'https://soundcloud.com',
-  spotify:
-    process.env.NEXT_PUBLIC_SPOTIFY_PROFILE_URL ||
-    'https://open.spotify.com/artist/2GuuKuQBZ3AD3opyrL9l8s',
-  youtube:
-    process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_URL || 'https://youtube.com',
-};
-
-const mediaEmbeds = [
-  {
-    title: 'SoundCloud',
-    description: 'Sets completos e mixtapes da Ana Jones.',
-    iframe:
-      process.env.NEXT_PUBLIC_SOUNDCLOUD_EMBED_URL ||
-      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1969383299&color=%23ff6b35&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false',
-  },
-  {
-    title: 'Spotify Oficial',
-    description: 'Perfil oficial da Ana Jones no Spotify.',
-    iframe:
-      process.env.NEXT_PUBLIC_SPOTIFY_EMBED_URL ||
-      'https://open.spotify.com/embed/artist/2GuuKuQBZ3AD3opyrL9l8s?utm_source=generator',
-  },
-  {
-    title: 'Spotify Autorais',
-    description: 'Playlist oficial com faixas autorais da Ana Jones.',
-    iframe:
-      process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_AUTORAIS_EMBED_URL ||
-      'https://open.spotify.com/embed/playlist/2o4zp84d5ZGI2Hi6S1Ern5?utm_source=generator',
-  },
-  {
-    title: 'Spotify Sonzeira',
-    description: 'Curadoria oficial: So pra quem curte sonzeira.',
-    iframe:
-      process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_SONZEIRA_EMBED_URL ||
-      'https://open.spotify.com/embed/playlist/5MbO1bL0hz2FkRu0raWWrk?utm_source=generator',
-  },
-  {
-    title: 'YouTube',
-    description: 'Shows, lives e registros visuais da pista.',
-    iframe:
-      process.env.NEXT_PUBLIC_YOUTUBE_EMBED_URL ||
-      'https://www.youtube.com/embed/FlspfN8iHJ0',
-  },
-];
-
 export default async function HomePage() {
   const siteContent = await getSiteContent();
   const instagramPosts = await getInstagramPosts(6);
   const events = [...siteContent.events].sort((a, b) => a.dateIso.localeCompare(b.dateIso));
   const galleryImages = siteContent.galleryImages;
   const heroImages = siteContent.heroImages.map((image) => image.src);
+  const { profile, socialLinks, mediaEmbeds, contactInfo } = siteContent;
 
   return (
     <main className='relative isolate min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--brand-cream)]'>
@@ -105,7 +54,7 @@ export default async function HomePage() {
 
         <div className='mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.3fr_1fr]'>
           <div className='space-y-7 fade-up'>
-            <p className='badge'>Brasilia • Fundadora Clubinho Room</p>
+            <p className='badge'>{profile.heroSubtitle}</p>
             <h1 className='font-display text-[3.2rem] uppercase leading-[0.9] tracking-[0.04em] text-[var(--brand-cream)] sm:text-[4.4rem] lg:text-[6rem]'>
               Ana Jones
             </h1>
@@ -118,9 +67,7 @@ export default async function HomePage() {
               </figcaption>
             </figure>
             <p className='max-w-2xl text-base leading-relaxed text-[var(--muted)] md:text-lg'>
-              Sonoridade eletrônica com identidade autoral, sets energéticos e curadoria de pista.
-              Ana Jones atua em Brasilia e lidera a cena da Clubinho Room com experiencias que
-              conectam música, performance e comunidade.
+              {profile.heroBio}
             </p>
             <div className='flex flex-wrap gap-3'>
               <a href='#eventos' className='btn-primary'>
@@ -193,34 +140,31 @@ export default async function HomePage() {
         <div className='mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_1fr]'>
           <div className='glass-card p-6 md:p-8'>
             <p className='section-kicker'>Sobre</p>
-            <h2 className='section-title'>Identidade artística</h2>
+            <h2 className='section-title'>{profile.aboutTitle}</h2>
             <p className='mt-4 text-base leading-relaxed text-[var(--muted)]'>
-              Ana Jones nasceu na cena eletrônica de Brasilia e tornou-se referência na construção
-              de atmosferas progressivas e house com personalidade. Como fundadora da Clubinho
-              Room, ela assina eventos que priorizam experiência sonora, comunidade e estética.
+              {profile.aboutParagraph1}
             </p>
             <p className='mt-4 text-base leading-relaxed text-[var(--muted)]'>
-              O projeto combina sets de alta energia, curadoria musical consistente e direção
-              criativa para marcas, clubs e festivais.
+              {profile.aboutParagraph2}
             </p>
           </div>
 
           <div className='grid gap-4 sm:grid-cols-2'>
             <article className='glass-card p-5'>
               <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Base</p>
-              <p className='mt-2 text-xl font-display uppercase'>Brasilia - DF</p>
+              <p className='mt-2 text-xl font-display uppercase'>{profile.base}</p>
             </article>
             <article className='glass-card p-5'>
               <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Projeto</p>
-              <p className='mt-2 text-xl font-display uppercase'>Clubinho Room</p>
+              <p className='mt-2 text-xl font-display uppercase'>{profile.projeto}</p>
             </article>
             <article className='glass-card p-5'>
               <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Formato</p>
-              <p className='mt-2 text-xl font-display uppercase'>DJ Set / Live</p>
+              <p className='mt-2 text-xl font-display uppercase'>{profile.formato}</p>
             </article>
             <article className='glass-card p-5'>
               <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Booking</p>
-              <p className='mt-2 text-xl font-display uppercase'>Brasil e Exterior</p>
+              <p className='mt-2 text-xl font-display uppercase'>{profile.booking}</p>
             </article>
           </div>
         </div>
@@ -346,9 +290,7 @@ export default async function HomePage() {
             <p className='section-kicker'>Contratacao</p>
             <h2 className='section-title'>Book a DJ set para o seu evento</h2>
             <p className='text-base leading-relaxed text-[var(--muted)]'>
-              Envie os dados do seu projeto e receba proposta com formato técnico, fee e rider.
-              O formulário já salva no painel admin e pode disparar notificação por email via
-              Resend.
+              {contactInfo.bookingDescription}
             </p>
 
             <div className='grid gap-4 sm:grid-cols-2'>
@@ -356,20 +298,20 @@ export default async function HomePage() {
                 <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>Email</p>
                 <a
                   className='mt-2 block text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
-                  href='mailto:abreuanacrist@gmail.com'
+                  href={`mailto:${contactInfo.email}`}
                 >
-                  abreuanacrist@gmail.com
+                  {contactInfo.email}
                 </a>
               </article>
               <article className='glass-card p-5'>
                 <p className='text-xs uppercase tracking-[0.12em] text-[var(--muted)]'>WhatsApp</p>
                 <a
                   className='mt-2 block text-sm font-semibold text-[var(--brand-cyan)] hover:opacity-80'
-                  href='https://wa.me/5561999999999'
+                  href={contactInfo.whatsapp}
                   target='_blank'
                   rel='noreferrer'
                 >
-                  +55 61 99999-9999
+                  {contactInfo.whatsappLabel}
                 </a>
               </article>
             </div>
@@ -381,7 +323,7 @@ export default async function HomePage() {
 
       <footer className='border-t border-white/10 px-4 py-8 text-xs uppercase tracking-[0.12em] text-[var(--muted)] md:px-10'>
         <div className='mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:items-center md:justify-between'>
-          <p>Ana Jones • Brasilia • Clubinho Room</p>
+          <p>Ana Jones • {profile.base} • {profile.projeto}</p>
           <div className='flex gap-4'>
             <a href='/admin' className='hover:text-[var(--brand-cream)]'>
               Admin

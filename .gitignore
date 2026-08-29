@@ -52,3 +52,10 @@ next-env.d.ts
 
 # Presskit / raw images (kept outside git)
 /assets/
+# MigrAI internal files - do not track
+.openhands/
+workspace/conversations/
+workspace/
+
+# local dev log
+dev.log

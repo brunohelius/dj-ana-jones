@@ -16,26 +16,26 @@ export type DjEvent = {
 
 export const EVENTS: DjEvent[] = [
   {
-    slug: 'aniversario-ana-jones-2026',
-    title: 'Aniversario Ana Jones x Heineken',
-    dateIso: '2026-02-14',
-    dateLabel: '14 de fevereiro de 2026',
-    timeLabel: '16h',
-    location: 'Air Music',
-    city: 'Brasilia - DF',
+    slug: 'clubinho-room-pocket-edition',
+    title: 'Clubinho Room Pocket Edition',
+    dateIso: '2026-11-21',
+    dateLabel: '21 de novembro de 2026',
+    timeLabel: '18h',
+    location: 'Condominio RK',
+    city: 'Sobradinho - DF',
     description:
-      'Sunset especial de aniversario da Ana Jones com experiencia Heineken. Inicio as 16h, set extended, convidados da cena local e lista de nomes para o publico.',
+      'Edicao pocket da Clubinho Room: formato intimista, pista curada e a energia da cena em escala reduzida. Ana Jones no comando do set principal em um espaco exclusivo do Condominio RK, em Sobradinho.',
     highlights: [
-      'Edicao especial de aniversario com assinatura Heineken',
-      'Sunset a partir das 16h com set extended da Ana Jones',
-      'Experiencia visual e ativações de marca durante a noite',
+      'Formato pocket: publico limitado e experiencia proxima da pista',
+      'Set extended da Ana Jones com house, melodic e progressive',
+      'Ambiente exclusivo do Condominio RK em Sobradinho',
     ],
     listRules: [
-      'Lista valida ate 23h00 do dia 14/02.',
+      'Lista valida ate 22h00 do dia 21/11.',
       'Nome completo e documento obrigatorios na entrada.',
-      'Cada inscricao permite ate 2 acompanhantes.',
+      'Vagas limitadas: confirmacao por ordem de inscricao.',
     ],
-    coverImage: '/gallery/real/ana-zamna-festival.jpeg',
+    coverImage: '/gallery/real/ana-clubinho-goiania-artwork.png',
     signupOpen: true,
   },
   {

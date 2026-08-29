@@ -105,7 +105,7 @@ Persistencia inicial:
 
 ## 6) Fluxo de evento (aniversario / lista)
 1. Ana cria/ativa evento em `src/lib/events.ts`
-2. Compartilha link: `https://dominio/eventos/aniversario-ana-jones-2026`
+2. Compartilha link: `https://dominio/eventos/sunset-clubinho-edition`
 3. Convidado preenche formulario
 4. Sistema salva inscricao em `data/event-signups.json`
 5. Sistema envia email para operacao (quando SES configurado)

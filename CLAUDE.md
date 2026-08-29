@@ -31,7 +31,7 @@ npx netlify deploy --prod --build
 
 ## Validacao rapida apos deploy
 1. Abrir `https://anajonesdj.com`
-2. Testar evento em `/eventos/aniversario-ana-jones-2026`
+2. Testar evento em `/eventos/sunset-clubinho-edition`
 3. Testar formulario de contratacao na home
 4. Abrir `/admin`, inserir `ADMIN_DASHBOARD_KEY` e confirmar dados
 5. (Opcional) No `/admin`, abrir **Conteudo do Site** e validar que eventos/galeria carregam

@@ -470,7 +470,7 @@ export const AdminContent = ({ fetchWithAuth }: Props) => {
                                     className='field'
                                     value={event.slug}
                                     onChange={(e) => updateEvent(index, { slug: e.target.value })}
-                                    placeholder='slug (ex: aniversario-ana-jones-2026)'
+                                    placeholder='slug (ex: sunset-clubinho-edition)'
                                 />
                                 <input
                                     className='field'
